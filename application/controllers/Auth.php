@@ -28,4 +28,9 @@ class Auth extends CI_Controller{
             redirect($_SERVER['HTTP_REFERER'],'refresh');
         }
     }
+
+    function logout(){
+        session_destroy();
+        redirect('','refresh');
+    }
 }
