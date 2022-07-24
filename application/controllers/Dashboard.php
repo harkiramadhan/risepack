@@ -9,6 +9,7 @@ class Dashboard extends CI_Controller{
 
     function index(){
         $datas = [
+            'title' => 'Dashboard',
             'page' => 'pages/dashboard'
         ];
         $this->load->view('template', $datas);
