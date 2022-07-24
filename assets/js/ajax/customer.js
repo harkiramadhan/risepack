@@ -21,7 +21,7 @@ var KTDatatablesServerSideCustomer = function () {
                 className: 'row-selected'
             },
             ajax: {
-                url: baseUrl + "crm/customerDatatable",
+                url: baseUrl + "customer/datatable",
             },
             columns: [
                 { data: 'nama' },
@@ -32,6 +32,16 @@ var KTDatatablesServerSideCustomer = function () {
                 { data: null },
             ],
             columnDefs: [
+                {
+                    targets: 0,
+                    data: null,
+                    orderable: true,
+                    render: function (data, type, row, meta) {
+                        return `
+                            <a href="${baseUrl}customer/${row.id}" class="text-dark text-hover-primary">${data}</a>
+                        `
+                    }
+                },
                 {
                     targets: -1,
                     data: null,
@@ -54,6 +64,14 @@ var KTDatatablesServerSideCustomer = function () {
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
+                                    <a href="${baseUrl}customer/${row.id}" class="menu-link px-3">
+                                        <i class="fas fa-eye me-5"></i>Detail
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
+
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
                                     <a href="#" 
                                         onclick="editCustomer('${row.id}','${row.nama}','${row.nohp}','${row.instansi_id}','${row.instansi}')"
                                         class="menu-link px-3"
@@ -65,8 +83,10 @@ var KTDatatablesServerSideCustomer = function () {
 
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3">
-                                        Delete
+                                    <a href="#" 
+                                        onclick="deleteCustomer('${row.id}','${row.nama}')"
+                                        class="menu-link px-3">
+                                        <i class="fas fa-trash me-5"></i>Delete
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
@@ -102,40 +122,11 @@ var KTDatatablesServerSideCustomer = function () {
         })
     }
 
-    // Filter Datatable
-    var handleFilterDatatable = () => {
-        // Select filter options
-        filterPayment = document.querySelectorAll('[data-kt-docs-table-filter="deal_status"] [name="deal_status"]')
-        const filterButton = document.querySelector('[data-kt-docs-table-filter="filter"]')
-
-        // Filter datatable on submit
-        filterButton.addEventListener('click', function () {
-            // Get filter values
-            let dealStatusId = ''
-
-            // Get payment value
-            filterPayment.forEach(r => {
-                if (r.checked) {
-                    dealStatusId = r.value
-                }
-
-                // Reset payment value if "All" is selected
-                if (dealStatusId === 'all') {
-                    dealStatusId = ''
-                }
-            })
-
-            // Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
-            dt.search(dealStatusId).draw()
-        })
-    }
-
     // Public methods
     return {
         init: function () {
             initDatatable()
             handleSearchDatatable()
-            handleFilterDatatable()
         }
     }
 }()
@@ -154,11 +145,67 @@ function editCustomer(id,nama,nohp,instansi_id,instansi){
     $('#modal-edit-customer-only').modal('show')
 }
 
+function deleteCustomer(id, nama){
+    Swal.fire({
+        text: "Are you sure you want to delete " + nama + "?",
+        icon: "warning",
+        showCancelButton: true,
+        buttonsStyling: false,
+        confirmButtonText: "Yes, delete!",
+        cancelButtonText: "No, cancel",
+        customClass: {
+            confirmButton: "btn fw-bold btn-danger",
+            cancelButton: "btn fw-bold btn-active-light-primary"
+        }
+    }).then(function (result) {
+        if (result.value) {
+            $.ajax({
+                url: baseUrl + 'customer/delete/' + id,
+                type: 'post',
+                beforeSend: function(){
+                    Swal.fire({
+                        text: "Deleting " + nama,
+                        icon: "info",
+                        buttonsStyling: false,
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                },
+                success: function(res){
+                    if(res.status == 200){
+                        Swal.fire({
+                            text: "You have deleted " + nama + "!.",
+                            icon: "success",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn fw-bold btn-primary",
+                            }
+                        })
+                    }
+
+                    $('#kt_datatable_customer').DataTable().ajax.reload()
+                }
+            })
+        } else if (result.dismiss === 'cancel') {
+            Swal.fire({
+                text: nama + " was not deleted.",
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                }
+            })
+        }
+    })
+}
+
 $('#submit-form-konsumen-only').click(function(){
     var form = $('#form-konsumen-only').serialize()
     
     $.ajax({
-        url: baseUrl + 'crm/createConsument',
+        url: baseUrl + 'customer/create',
         type: 'post',
         data: form,
         success: function(res){
@@ -203,6 +250,7 @@ $('#submit-form-konsumen-only').click(function(){
                     },
                 })
                 $('#kt_datatable_customer').DataTable().ajax.reload()
+                $('#form-konsumen-only')[0].reset();
                 $('#modal-add-customer-only-close-btn').click()
             }
         }
@@ -213,7 +261,7 @@ $('#submit-form-edit-konsumen-only').click(function(){
     var form = $('#form-edit-konsumen-only').serialize()
     
     $.ajax({
-        url: baseUrl + 'crm/editConsument',
+        url: baseUrl + 'customer/edit',
         type: 'post',
         data: form,
         success: function(res){

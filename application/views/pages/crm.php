@@ -52,7 +52,7 @@
                                         </svg>
                                     </span>
                                     <!--end::Svg Icon-->
-                                    <input type="text" data-kt-docs-table-filter="search-customer" class="form-control form-control-solid w-250px ps-15" placeholder="Search ..." />
+                                    <input type="text" data-kt-docs-table-filter="search-customer" class="form-control form-control-solid w-450px ps-15" placeholder="Search ..." />
                                 </div>
                                 <!--end::Search-->
                                 <!--begin::Toolbar-->
@@ -208,7 +208,7 @@
                                         </svg>
                                     </span>
                                     <!--end::Svg Icon-->
-                                    <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search ..." />
+                                    <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-450px ps-15" placeholder="Search ..." />
                                 </div>
                                 <!--end::Search-->
                                 <!--begin::Toolbar-->
@@ -2899,9 +2899,7 @@
                             <label for="customer_id" class="required form-label">Konsumen</label>
                             <select name="customer_id" id="customer_id" class="form-select form-select-solid">
                                 <option value="" selected disabled> - Pilih Konsumen</option>
-                                <?php foreach($customers->result() as $c){ ?>
-                                    <option value="<?= $c->id ?>">&nbsp;&nbsp;<?= $c->nama." - ".$c->instansi ?></option>
-                                <?php } ?>
+                                
                             </select>
                             <small class="text-danger"><strong id="customer_id_error"></strong></small>
                         </div>

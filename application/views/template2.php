@@ -57,7 +57,7 @@ License: For each use you must have a valid license purchased only from above li
 					<!--end::Logo-->
 					<!--begin::Nav-->
 					<div class="aside-menu flex-column-fluid pt-0 pb-7 py-lg-10" id="kt_aside_menu">
-						<?php $this->load->view('menus') ?>
+                        <?php $this->load->view('menus') ?>
 					</div>
 					<!--end::Nav-->
 					<!--begin::Footer-->
@@ -177,17 +177,34 @@ License: For each use you must have a valid license purchased only from above li
 					</div>
 					<!--end::Header tablet and mobile-->
 					<!--begin::Header-->
-					<div id="kt_header" class="header py-6 py-lg-0 my-primary" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{lg: '300px'}">
+					<div id="kt_header" class="header py-6 py-lg-0 bg-white" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{lg: '300px'}">
 						<!--begin::Container-->
 						<div class="header-container container-xxl">
 							<!--begin::Page title-->
 							<div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-20 py-3 py-lg-0 me-3">
-								<!--begin::Heading-->
-								<h1 class="d-flex flex-column text-dark fw-bolder my-1">
-									<span class="text-white fs-1"><?= @$title ?></span>
-									<small class="text-white fs-6 fw-normal pt-2"><?= @$title_desc ?></small>
-								</h1>
-								<!--end::Heading-->
+                                <div class="row align-items-center">
+                                    <div class="col-lg-2">
+                                        <a href="<?= site_url($backUrl) ?>">
+                                            <!--begin::Svg Icon | path: assets/media/icons/duotune/arrows/arr002.svg-->
+                                            <span class="svg-icon svg-icon-danger svg-icon-2hx">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M9.60001 11H21C21.6 11 22 11.4 22 12C22 12.6 21.6 13 21 13H9.60001V11Z" fill="black"/>
+                                                    <path opacity="0.3" d="M9.6 20V4L2.3 11.3C1.9 11.7 1.9 12.3 2.3 12.7L9.6 20Z" fill="black"/>
+                                                </svg>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        <!--begin::Heading-->
+                                        <h1 class="d-flex flex-column text-dark fw-bolder my-1">
+                                            <span class="text-dark fs-1"><?= @$title ?></span>
+                                            <small class="text-dark fs-6 fw-normal pt-2"><?= @$title_desc ?></small>
+                                        </h1>
+                                        <!--end::Heading-->
+                                    </div>
+                                </div>
+								
 							</div>
 							<!--end::Page title=-->
 							<!--begin::Wrapper-->
