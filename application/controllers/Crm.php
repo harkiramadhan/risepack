@@ -16,6 +16,7 @@ class CRM extends CI_Controller{
             'title_desc' => 'Overview dan summary penjualan',
             'page' => 'pages/crm',
             'deal_status' => $this->db->get('deal_status'),
+            'belum_dihargai' => $this->db->select('id')->get_where('orders', ['price' => 0])->num_rows(),
             'pic' => $this->db->order_by('nama', "ASC")->get('pic'),
             'sumber' => $this->db->order_by('kode', "ASC")->get('sumber'),
             'instansi' => $this->db->order_by('instansi', 'ASC')->get('tipe_instansi'),
@@ -32,6 +33,13 @@ class CRM extends CI_Controller{
         $this->load->library('form_validation');
         $config = [
             [
+                'field' => 'customer_id',
+                'label' => 'Customer',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Konsumen Wajib Di Isi'
+                ]
+            ],[
                 'field' => 'tanggal',
                 'label' => 'Tanggal',
                 'rules' => 'required',
@@ -67,20 +75,6 @@ class CRM extends CI_Controller{
                     'required' => 'PIC Wajib Di Isi'
                 ]
             ],[
-                'field' => 'nama',
-                'label' => 'Nama Customer',
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Nama Customer Wajib Di Isi'
-                ]
-            ],[
-                'field' => 'nohp',
-                'label' => 'No HP',
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'No HP Wajib Di Isi'
-                ]
-            ],[
                 'field' => 'deal_status_id',
                 'label' => 'Status Deal',
                 'rules' => 'required',
@@ -94,21 +88,7 @@ class CRM extends CI_Controller{
                 'errors' => [
                     'required' => 'Order Status Wajib Di Isi'
                 ]
-            ],[
-                'field' => 'instansi',
-                'label' => 'Instansi',
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Instansi Wajib Di Isi'
-                ]
-            ],[
-                'field' => 'instansi_id',
-                'label' => 'Tipe Instansi',
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Tipe Instansi Wajib Di Isi'
-                ]
-            ],
+            ]
         ];
         $this->form_validation->set_rules($config);
         
@@ -166,28 +146,18 @@ class CRM extends CI_Controller{
             $this->output->set_content_type('application/json')->set_output(json_encode($err));
                 
         }else{
-            $insertCustomer = [
-                'nama' => $this->input->post('nama', TRUE),
-                'nohp' => $this->input->post('nohp', TRUE),
-                'instansi_id' => $this->input->post('instansi_id', TRUE),
-                'instansi' => $this->input->post('instansi', TRUE)
+            $datas = [
+                'customer_id' => $this->input->post('customer_id', TRUE),
+                'tanggal' => $this->input->post('tanggal', TRUE),
+                'sumber_id' => $this->input->post('sumber_id', TRUE),
+                'kontrak' => $this->input->post('kontrak', TRUE),
+                'order_code' => $this->input->post('order_code', TRUE),
+                'kode_order' => $this->input->post('order_code', TRUE),
+                'pic_id' => $this->input->post('pic_id', TRUE),
+                'deal_status_id' => $this->input->post('deal_status_id', TRUE),
+                'order_status_id' => $this->input->post('order_status_id', TRUE),
             ];
-            $this->db->insert('customer', $insertCustomer);
-            if($this->db->affected_rows() > 0){
-                $customer_id = $this->db->insert_id();
-                $datas = [
-                    'customer_id' => $customer_id,
-                    'tanggal' => $this->input->post('tanggal', TRUE),
-                    'sumber_id' => $this->input->post('sumber_id', TRUE),
-                    'kontrak' => $this->input->post('kontrak', TRUE),
-                    'order_code' => $this->input->post('order_code', TRUE),
-                    'kode_order' => $this->input->post('order_code', TRUE),
-                    'pic_id' => $this->input->post('pic_id', TRUE),
-                    'deal_status_id' => $this->input->post('deal_status_id', TRUE),
-                    'order_status_id' => $this->input->post('order_status_id', TRUE),
-                ];
-                $this->db->insert('orders', $datas);
-            }
+            $this->db->insert('orders', $datas);
             if($this->db->affected_rows() > 0){
                 $res = [
                     'status' => 200,

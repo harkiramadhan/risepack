@@ -93,6 +93,7 @@
                     <!--end::Card body-->
                 </div>
             </div>
+            
             <div class="tab-pane fade" id="tab_crm" role="tabpanel">
                 <!--begin::Row-->
                 <div class="row g-6 g-xl-9 mt-2">
@@ -151,7 +152,7 @@
 
                             <div class="card-body d-flex flex-column">
                                 <!--begin::Amount-->
-                                <span class="fs-2hx fw-bolder text-white me-2 lh-1 ls-n2">223</span>
+                                <span class="fs-2hx fw-bolder text-white me-2 lh-1 ls-n2"><?= $belum_dihargai ?></span>
                                 <!--end::Amount-->
                                 <!--begin::Subtitle-->
                                 <span class="text-white pt-1 fw-semibold fs-6">Konsumen Belum Di Beri Harga</span>
@@ -262,8 +263,8 @@
                                     </div>
                                     <!--end::Menu 1-->
                                     <!--end::Filter-->
-                                    <!--begin::Add Order-->
-                                    <button type="button" class="btn btn-danger my-primary me-2" data-bs-toggle="modal" data-bs-target="#modal-add-order" data-bs-toggle="tooltip" title="Add Order">
+                                    <!--begin::Add customer-->
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-add-order" data-bs-toggle="tooltip" title="Add Customer">
                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                                     <span class="svg-icon svg-icon-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -272,17 +273,6 @@
                                         </svg>
                                     </span>
                                     <!--end::Svg Icon-->Add Order</button>
-                                    <!--end::Add Order-->
-                                    <!--begin::Add customer-->
-                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-add-customer" data-bs-toggle="tooltip" title="Add Customer">
-                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                                    <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black" />
-                                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black" />
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->Add Customer</button>
                                     <!--end::Add customer-->
                                 </div>
                                 <!--end::Toolbar-->
@@ -2611,539 +2601,114 @@
     <!--end::Container-->
 </div>
 
-<div class="modal fade" tabindex="-1" id="modal-add-customer">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Tambah Konsumen Baru</h5>
-                <!--begin::Close-->
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <span class="svg-icon svg-icon-2x"><i class="fas fa-times"></i></span>
-                </div>
-                <!--end::Close-->
-            </div>
-
-            <div class="modal-body mt-n10">
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Data Konsumen</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Data Produksi</button>
-                    </li>
-                </ul>
-                <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <form action="" id="form-konsumen">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="tanggal" class="required form-label">Tanggal</label>
-                                    <input type="date" id="tanggal" name="tanggal" class="form-control form-control-solid" placeholder="Tanggal"/>
-                                    <small class="text-danger"><strong id="tanggal_error"></strong></small>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="sumber" class="required form-label">Sumber</label>
-                                    <select id="sumber_id" name="sumber_id" class="form-select form-control form-control-solid" aria-label="Select example">
-                                        <option selected disabled>- Pilih Sumber</option>
-                                        <?php foreach($sumber->result() as $s){ ?>
-                                            <option value="<?= $s->id ?>" data-kode="<?= $s->kode ?>"> <?= $s->sumber ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    <small class="text-danger"><strong id="sumber_id_error"></strong></small>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="kontrak" class="required form-label">Waktu Kontrak</label>
-                                    <input type="date" id="kontrak" name="kontrak" class="form-control form-control-solid" placeholder="Waktu Kontrak"/>
-                                    <small class="text-danger"><strong id="kontrak_error"></strong></small>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="order_code" class="required form-label">Kode Order</label>
-                                    <input type="text" id="order_code" name="order_code" class="form-control form-control-solid" placeholder="Kode Order"/>
-                                    <small class="text-danger"><strong id="order_code_error"></strong></small>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="pic_id" class="required form-label">PIC</label>
-                                    <select id="pic_id" name="pic_id" class="form-select form-control form-control-solid" aria-label="Select example">
-                                        <option selected disabled>- Pilih PIC</option>
-                                        <?php foreach($pic->result() as $p){ ?>
-                                            <option value="<?= $p->id ?>"> <?= $p->nama ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    <small class="text-danger"><strong id="pic_id_error"></strong></small>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="bulan" class="form-label">Bulan</label>
-                                    <select id="bulan" name="bulan" class="form-select form-control form-control-solid" aria-label="Select example" disabled>
-                                        <option selected disabled>- Pilih Bulan</option>
-                                        <?php foreach(range(1, 12) as $b){ ?>
-                                            <option value="<?= $b ?>" <?= ((int)date('m') == $b) ? 'selected' : '' ?>> <?= bulan($b) ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    <small class="text-danger"><strong id="bulan_error"></strong></small>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="nama" class="required form-label">Nama</label>
-                                    <input type="text" id="nama" name="nama" class="form-control form-control-solid" placeholder="Nama Konsumen"/>
-                                    <small class="text-danger"><strong id="nama_error"></strong></small>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="nohp" class="required form-label">No HP</label>
-                                    <input type="number" id="nohp" name="nohp" class="form-control form-control-solid" placeholder="Nomor Handphone"/>
-                                    <small class="text-danger"><strong id="nohp_error"></strong></small>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="deal_status_id" class="required form-label">Status Deal</label>
-                                            <select id="deal_status_id" name="deal_status_id" class="form-select form-control form-control-solid" aria-label="Select example" disabled>
-                                                <option selected disabled>- Pilih Status Deal</option>
-                                                <?php foreach($deal_status->result() as $ds): ?>
-                                                    <option value="<?= $ds->id ?>"> <?= $ds->status ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                            <small class="text-danger"><strong id="deal_status_id_error"></strong></small>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="order_status_id" class="required form-label">Status Order</label>
-                                            <div class="order-status">
-                                                <select id="order_status_id" name="order_status_id" class="form-select form-control form-control-solid" aria-label="Select example">
-                                                    <option selected disabled>- Pilih Status Order</option>
-                                                </select>
-                                            </div>
-                                            <small class="text-danger"><strong id="order_status_id_error"></strong></small>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="instansi_id" class="required form-label">Tipe Instansi</label>
-                                    <select id="instansi_id" name="instansi_id" class="form-select form-control form-control-solid" aria-label="Select example">
-                                        <option selected disabled>- Pilih Tipe Instansi</option>
-                                        <?php foreach($instansi->result() as $i){ ?>
-                                            <option value="<?= $i->id ?>"> <?= $i->instansi ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    <small class="text-danger"><strong id="instansi_id_error"></strong></small>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="instansi" class="required form-label">Instansi</label>
-                                    <input type="text" id="instansi" name="instansi" class="form-control form-control-solid" placeholder="Nama Instansi"/>
-                                    <small class="text-danger"><strong id="instansi_error"></strong></small>
-                                </div>
-                            </div>
-                        </div>
-                        </form>
-                    </div>
-                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                        <form action="" id="form-konsumen">
-                            <div class="row">
-                                <div class="col-2">
-                                    <!--begin::Svg Icon | path: assets/media/icons/duotune/technology/teh002.svg-->
-                                    <span class="menu-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="130" height="130" viewBox="0 0 24 24" fill="none">
-                                            <path opacity="0.3" d="M3 6C2.4 6 2 5.6 2 5V3C2 2.4 2.4 2 3 2H5C5.6 2 6 2.4 6 3C6 3.6 5.6 4 5 4H4V5C4 5.6 3.6 6 3 6ZM22 5V3C22 2.4 21.6 2 21 2H19C18.4 2 18 2.4 18 3C18 3.6 18.4 4 19 4H20V5C20 5.6 20.4 6 21 6C21.6 6 22 5.6 22 5ZM6 21C6 20.4 5.6 20 5 20H4V19C4 18.4 3.6 18 3 18C2.4 18 2 18.4 2 19V21C2 21.6 2.4 22 3 22H5C5.6 22 6 21.6 6 21ZM22 21V19C22 18.4 21.6 18 21 18C20.4 18 20 18.4 20 19V20H19C18.4 20 18 20.4 18 21C18 21.6 18.4 22 19 22H21C21.6 22 22 21.6 22 21ZM16 11V9C16 6.8 14.2 5 12 5C9.8 5 8 6.8 8 9V11C7.2 11 6.5 11.7 6.5 12.5C6.5 13.3 7.2 14 8 14V15C8 17.2 9.8 19 12 19C14.2 19 16 17.2 16 15V14C16.8 14 17.5 13.3 17.5 12.5C17.5 11.7 16.8 11 16 11ZM13.4 15C13.7 15 14 15.3 13.9 15.6C13.6 16.4 12.9 17 12 17C11.1 17 10.4 16.5 10.1 15.7C10 15.4 10.2 15 10.6 15H13.4Z" fill="black"/>
-                                            <path d="M9.2 12.9C9.1 12.8 9.10001 12.7 9.10001 12.6C9.00001 12.2 9.3 11.7 9.7 11.6C10.1 11.5 10.6 11.8 10.7 12.2C10.7 12.3 10.7 12.4 10.7 12.5L9.2 12.9ZM14.8 12.9C14.9 12.8 14.9 12.7 14.9 12.6C15 12.2 14.7 11.7 14.3 11.6C13.9 11.5 13.4 11.8 13.3 12.2C13.3 12.3 13.3 12.4 13.3 12.5L14.8 12.9ZM16 7.29998C16.3 6.99998 16.5 6.69998 16.7 6.29998C16.3 6.29998 15.8 6.30001 15.4 6.20001C15 6.10001 14.7 5.90001 14.4 5.70001C13.8 5.20001 13 5.00002 12.2 4.90002C9.9 4.80002 8.10001 6.79997 8.10001 9.09997V11.4C8.90001 10.7 9.40001 9.8 9.60001 9C11 9.1 13.4 8.69998 14.5 8.29998C14.7 9.39998 15.3 10.5 16.1 11.4V9C16.1 8.5 16 8 15.8 7.5C15.8 7.5 15.9 7.39998 16 7.29998Z" fill="black"/>
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                </div>
-                                <div class="col-10" style="margin-left: -40px !important">
-                                    <h1 class="mt-4"><strong>$(getCustomerName)</strong></h1>
-                                    <span class="badge badge-secondary">Deal / Belum Deal</span><span class="badge badge-light">Status Order</span><span class="badge badge-secondary">Status Follow Up</span>
-                                </div>
-                                <div class="col-lg-6 mt-5">
-                                    <div class="mb-3">
-                                        <label for="kategori_id" class="required form-label">Kategori</label>
-                                        <select id="kategori_id" name="kategori_id" class="form-select form-control form-control-solid" aria-label="Select example">
-                                            <option selected disabled>- Pilih Kategori</option>
-                                            <option value="Produksi"> Produksi</option>
-                                            <option value="Dummy"> Dummy</option>
-                                        </select>
-                                        <small class="text-danger"><strong id="kategori_id_error"></strong></small>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="bahan_id" class="required form-label">Jenis Bahan</label>
-                                        <select id="bahan_id" name="bahan_id" class="form-select form-control form-control-solid" aria-label="Select example">
-                                            <option selected disabled>- Pilih Jenis Bahan</option>
-                                            <option value="Produksi"> Produksi</option>
-                                            <option value="Dummy"> Dummy</option>
-                                        </select>
-                                        <small class="text-danger"><strong id="bahan_id_error"></strong></small>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="produk_id" class="required form-label">Produk</label>
-                                        <select id="produk_id" name="produk_id" class="form-select form-control form-control-solid" aria-label="Select example">
-                                            <option selected disabled>- Pilih Produk</option>
-                                            <option value="Produksi"> Produksi</option>
-                                            <option value="Dummy"> Dummy</option>
-                                        </select>
-                                        <small class="text-danger"><strong id="produk_id_error"></strong></small>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="spesifikasi" class="required form-label">Spesifikasi</label>
-                                        <input type="text" id="spesifikasi" name="spesifikasi" class="form-control form-control-solid" placeholder="Spesifikasi"/>
-                                        <small class="text-danger"><strong id="tanggal_error"></strong></small>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="harga" class="required form-label">Harga</label>
-                                                <input type="text" id="harga" name="harga" class="form-control form-control-solid" placeholder="Harga"/>
-                                                <small class="text-danger"><strong id="harga_error"></strong></small>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="jumlah" class="required form-label">Jumlah</label>
-                                                <input type="number" id="jumlah" name="jumlah" class="form-control form-control-solid" placeholder="Qty"/>
-                                                <small class="text-danger"><strong id="jumlah_error"></strong></small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="total_harga" class="required form-label">Total Harga</label>
-                                        <input type="text" id="total_harga" name="total_harga" class="form-control form-control-solid" placeholder="Total Harga" disabled/>
-                                        <small class="text-danger"><strong id="total_harga_error"></strong></small>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="keterangan" class="form-label">Keterangan Lost DP</label>
-                                        <textarea id="keterangan" name="keterangan" name="" id="" class="form-control form-control-solid" cols="30" rows="5" placeholder="isi keterangan kenapa konsumen lost"></textarea>
-                                        <small class="text-danger"><strong id="total_harga_error"></strong></small>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mt-5">
-                                    <div class="mb-3">
-                                        <label for="dp" class="required form-label">DP</label>
-                                        <input type="text" id="dp" name="dp" class="form-control form-control-solid" placeholder="DP"/>
-                                        <small class="text-danger"><strong id="dp_error"></strong></small>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="pelunasan" class="required form-label">Pelunasan</label>
-                                                <div class="form-check form-switch form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="checkbox" value="sudah" id="pelunasan" name="pelunasan"/>
-                                                    <label class="form-check-label" for="pelunasan">Belum / Sudah</label>
-                                                </div>
-                                                <small class="text-danger"><strong id="pelunasan_error"></strong></small>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="harga_rinci" class="required form-label">Hitung Harga Rinci</label>
-                                                <div class="form-check form-switch form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="checkbox" value="ya" id="harga_rinci" name="harga_rinci"/>
-                                                    <label class="form-check-label" for="harga_rinci">Tidak / Ya</label>
-                                                </div>
-                                                <small class="text-danger"><strong id="harga_rinci_error"></strong></small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="modal_sales" class="required form-label">Modal Sales</label>
-                                        <input type="text" id="modal_sales" name="modal_sales" class="form-control form-control-solid" placeholder="Modal Sales"/>
-                                        <small class="text-danger"><strong id="modal_sales_error"></strong></small>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="tanggal_order" class="required form-label">Tanggal Order</label>
-                                        <input type="date" id="tanggal_order" name="modal_sales" class="form-control form-control-solid" placeholder="Tanggal Order"/>
-                                        <small class="text-danger"><strong id="modal_sales_error"></strong></small>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="tipe_kontrak_id" class="required form-label">Tipe Kontrak</label>
-                                        <select id="tipe_kontrak_id" name="tipe_kontrak_id" class="form-select form-control form-control-solid" aria-label="Select example">
-                                            <option selected disabled>- Pilih Tipe Kontrak</option>
-                                            <option value="Produksi"> Produksi</option>
-                                            <option value="Dummy"> Dummy</option>
-                                        </select>
-                                        <small class="text-danger"><strong id="tipe_kontrak_id_error"></strong></small>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="submit-form-konsumen" class="btn btn-primary my-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade" tabindex="-1" id="modal-add-order">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Pesanan Baru</h5>
+                <h5 class="modal-title">Tambah Order Baru</h5>
                 <!--begin::Close-->
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" id="modal-order-close-btn" aria-label="Close">
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" id="modal-add-order-close" data-bs-dismiss="modal" aria-label="Close">
                     <span class="svg-icon svg-icon-2x"><i class="fas fa-times"></i></span>
                 </div>
                 <!--end::Close-->
             </div>
 
             <div class="modal-body mt-n10">
-                <form action="" id="form-add-new-order">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                            <label for="customer_id" class="required form-label">Konsumen</label>
-                            <select name="customer_id" id="customer_id" class="form-select form-select-solid">
-                                <option value="" selected disabled> - Pilih Konsumen</option>
-                                
-                            </select>
-                            <small class="text-danger"><strong id="customer_id_error"></strong></small>
-                        </div>
-                        <div class="mb-3">
-                            <label for="tanggal" class="required form-label">Tanggal</label>
-                            <input type="date" id="order_tanggal" name="tanggal" class="form-control form-control-solid" placeholder="Tanggal"/>
-                            <small class="text-danger"><strong id="order_tanggal_error"></strong></small>
-                        </div>
-                        <div class="mb-3">
-                            <label for="sumber" class="required form-label">Sumber</label>
-                            <select id="order_sumber_id" name="sumber_id" class="form-select form-control form-control-solid" aria-label="Select example">
-                                <option selected disabled>- Pilih Sumber</option>
-                                <?php foreach($sumber->result() as $s){ ?>
-                                    <option value="<?= $s->id ?>" data-kode="<?= $s->kode ?>"> <?= $s->sumber ?></option>
-                                <?php } ?>
-                            </select>
-                            <small class="text-danger"><strong id="order_sumber_id_error"></strong></small>
-                        </div>
-                        <div class="mb-3">
-                            <label for="kontrak" class="required form-label">Waktu Kontrak</label>
-                            <input type="date" id="order_kontrak" name="kontrak" class="form-control form-control-solid" placeholder="Waktu Kontrak"/>
-                            <small class="text-danger"><strong id="order_kontrak_error"></strong></small>
-                        </div>
-                        <div class="mb-3">
-                            <label for="order_code" class="required form-label">Kode Order</label>
-                            <input type="text" id="order_order_code" name="order_code" class="form-control form-control-solid" placeholder="Kode Order"/>
-                            <small class="text-danger"><strong id="order_order_code_error"></strong></small>
-                        </div>
-                        <div class="mb-3">
-                            <label for="pic_id" class="required form-label">PIC</label>
-                            <select id="order_pic_id" name="pic_id" class="form-select form-control form-control-solid" aria-label="Select example">
-                                <option selected disabled>- Pilih PIC</option>
-                                <?php foreach($pic->result() as $p){ ?>
-                                    <option value="<?= $p->id ?>"> <?= $p->nama ?></option>
-                                <?php } ?>
-                            </select>
-                            <small class="text-danger"><strong id="order_pic_id_error"></strong></small>
-                        </div>
-                        <div class="mb-3">
-                            <label for="bulan" class="form-label">Bulan</label>
-                            <select id="order_bulan" name="bulan" class="form-select form-control form-control-solid" aria-label="Select example" disabled>
-                                <option selected disabled>- Pilih Bulan</option>
-                                <?php foreach(range(1, 12) as $b){ ?>
-                                    <option value="<?= $b ?>" <?= ((int)date('m') == $b) ? 'selected' : '' ?>> <?= bulan($b) ?></option>
-                                <?php } ?>
-                            </select>
-                            <small class="text-danger"><strong id="order_bulan_error"></strong></small>
-                        </div>
-                        <div class="mb-3">
-                            <label for="kategori_id" class="required form-label">Kategori</label>
-                            <select id="order_kategori_id" name="kategori_id" class="form-select form-control form-control-solid" aria-label="Select example">
-                                <option selected disabled>- Pilih Kategori</option>
-                                <?php foreach($produk_kategori->result() as $pko){ ?>
-                                    <option value="<?= $pko->id ?>"> <?= $pko->kategori ?></option>
-                                <?php } ?>
-                            </select>
-                            <small class="text-danger"><strong id="order_kategori_id_error"></strong></small>
-                        </div>
-                        <div class="mb-3">
-                            <label for="bahan_id" class="required form-label">Jenis Bahan</label>
-                            <select id="order_bahan_id" name="bahan_id" class="form-select form-control form-control-solid" aria-label="Select example">
-                                <option selected disabled>- Pilih Jenis Bahan</option>
-                                <option value="Produksi"> Produksi</option>
-                                <option value="Dummy"> Dummy</option>
-                            </select>
-                            <small class="text-danger"><strong id="order_bahan_id_error"></strong></small>
-                        </div>
-                        <div class="mb-3">
-                            <label for="produk_id" class="required form-label">Produk</label>
-                            <select id="order_produk_id" name="produk_id" class="form-select form-control form-control-solid" aria-label="Select example">
-                                <option selected disabled>- Pilih Produk</option>
-                                <option value="Produksi"> Produksi</option>
-                                <option value="Dummy"> Dummy</option>
-                            </select>
-                            <small class="text-danger"><strong id="order_produk_id_error"></strong></small>
-                        </div>
-                        <div class="mb-3">
-                            <label for="spesifikasi" class="required form-label">Spesifikasi</label>
-                            <input type="text" id="order_spesifikasi" name="spesifikasi" class="form-control form-control-solid" placeholder="Spesifikasi"/>
-                            <small class="text-danger"><strong id="order_spesifikasi_error"></strong></small>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                            <label for="tipe_kontrak_id" class="required form-label">Tipe Kontrak</label>
-                            <select id=order_tipe_kontrak_id" name="tipe_kontrak_id" class="form-select form-control form-control-solid" aria-label="Select example">
-                                <option selected disabled>- Pilih Tipe Kontrak</option>
-                                <option value="Produksi"> Produksi</option>
-                                <option value="Dummy"> Dummy</option>
-                            </select>
-                            <small class="text-danger"><strong id="order_tipe_kontrak_id_error"></strong></small>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="harga" class="required form-label">Harga</label>
-                                    <input type="text" id="order_harga" name="harga" class="form-control form-control-solid" placeholder="Harga"/>
-                                    <small class="text-danger"><strong id="order_harga_error"></strong></small>
-                                </div>
+                <form action="" id="form-order">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="customer_id" class="required form-label">Konsumen</label>
+                                <select name="customer_id" id="customer_id" class="form-select form-select-solid">
+                                    <option value="" selected disabled> - Pilih Konsumen</option>
+                                    
+                                </select>
+                                <small class="text-danger"><strong id="customer_id_error"></strong></small>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="jumlah" class="required form-label">Jumlah</label>
-                                    <input type="number" id="order_jumlah" name="jumlah" class="form-control form-control-solid" placeholder="Qty"/>
-                                    <small class="text-danger"><strong id="order_jumlah_error"></strong></small>
-                                </div>
+                            <div class="mb-3">
+                                <label for="tanggal" class="required form-label">Tanggal</label>
+                                <input type="date" id="tanggal" name="tanggal" class="form-control form-control-solid" placeholder="Tanggal"/>
+                                <small class="text-danger"><strong id="tanggal_error"></strong></small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="sumber" class="required form-label">Sumber</label>
+                                <select id="sumber_id" name="sumber_id" class="form-select form-control form-control-solid" aria-label="Select example">
+                                    <option selected disabled>- Pilih Sumber</option>
+                                    <?php foreach($sumber->result() as $s){ ?>
+                                        <option value="<?= $s->id ?>" data-kode="<?= $s->kode ?>"> <?= $s->sumber ?></option>
+                                    <?php } ?>
+                                </select>
+                                <small class="text-danger"><strong id="sumber_id_error"></strong></small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="kontrak" class="required form-label">Waktu Kontrak</label>
+                                <input type="date" id="kontrak" name="kontrak" class="form-control form-control-solid" placeholder="Waktu Kontrak"/>
+                                <small class="text-danger"><strong id="kontrak_error"></strong></small>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="total_harga" class="required form-label">Total Harga</label>
-                            <input type="text" id="order_total_harga" name="total_harga" class="form-control form-control-solid" placeholder="Total Harga" disabled/>
-                            <small class="text-danger"><strong id="order_total_harga_error"></strong></small>
-                        </div>
-                        <div class="mb-3">
-                            <label for="keterangan" class="form-label">Keterangan Lost DP</label>
-                            <textarea id="order_keterangan" name="keterangan" class="form-control form-control-solid" cols="30" rows="5" placeholder="isi keterangan kenapa konsumen lost"></textarea>
-                            <small class="text-danger"><strong id="order_keterangan_error"></strong></small>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="deal_status_id" class="required form-label">Status Deal</label>
-                                    <select id="order_deal_status_id" name="deal_status_id" class="form-select form-control form-control-solid" aria-label="Select example" disabled>
-                                        <option selected disabled>- Pilih Status Deal</option>
-                                        <?php foreach($deal_status->result() as $ds): ?>
-                                            <option value="<?= $ds->id ?>"> <?= $ds->status ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                    <small class="text-danger"><strong id="order_deal_status_id_error"></strong></small>
-                                </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="order_code" class="required form-label">Kode Order</label>
+                                <input type="text" id="order_code" name="order_code" class="form-control form-control-solid" placeholder="Kode Order"/>
+                                <small class="text-danger"><strong id="order_code_error"></strong></small>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="order_status_id" class="required form-label">Status Order</label>
-                                    <div class="order-status">
-                                        <select id="order_order_status_id" name="order_status_id" class="form-select form-control form-control-solid" aria-label="Select example">
-                                            <option selected disabled>- Pilih Status Order</option>
+
+                            <div class="mb-3">
+                                <label for="pic_id" class="required form-label">PIC</label>
+                                <select id="pic_id" name="pic_id" class="form-select form-control form-control-solid" aria-label="Select example">
+                                    <option selected disabled>- Pilih PIC</option>
+                                    <?php foreach($pic->result() as $p){ ?>
+                                        <option value="<?= $p->id ?>"> <?= $p->nama ?></option>
+                                    <?php } ?>
+                                </select>
+                                <small class="text-danger"><strong id="pic_id_error"></strong></small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="bulan" class="form-label">Bulan</label>
+                                <select id="bulan" name="bulan" class="form-select form-control form-control-solid" aria-label="Select example" disabled>
+                                    <option selected disabled>- Pilih Bulan</option>
+                                    <?php foreach(range(1, 12) as $b){ ?>
+                                        <option value="<?= $b ?>" <?= ((int)date('m') == $b) ? 'selected' : '' ?>> <?= bulan($b) ?></option>
+                                    <?php } ?>
+                                </select>
+                                <small class="text-danger"><strong id="bulan_error"></strong></small>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="deal_status_id" class="required form-label">Status Deal</label>
+                                        <select id="deal_status_id" name="deal_status_id" class="form-select form-control form-control-solid" aria-label="Select example" disabled>
+                                            <option selected disabled>- Pilih Status Deal</option>
+                                            <?php foreach($deal_status->result() as $ds): ?>
+                                                <option value="<?= $ds->id ?>"> <?= $ds->status ?></option>
+                                            <?php endforeach; ?>
                                         </select>
+                                        <small class="text-danger"><strong id="deal_status_id_error"></strong></small>
                                     </div>
-                                    <small class="text-danger"><strong id="order_order_status_id_error"></strong></small>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="order_status_id" class="required form-label">Status Order</label>
+                                        <div class="order-status">
+                                            <select id="order_status_id" name="order_status_id" class="form-select form-control form-control-solid" aria-label="Select example">
+                                                <option selected disabled>- Pilih Status Order</option>
+                                            </select>
+                                        </div>
+                                        <small class="text-danger"><strong id="order_status_id_error"></strong></small>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="dp" class="required form-label">DP</label>
-                            <input type="text" id="order_dp" name="dp" class="form-control form-control-solid" placeholder="DP"/>
-                            <small class="text-danger"><strong id="order_dp_error"></strong></small>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="pelunasan" class="required form-label">Pelunasan</label>
-                                    <div class="form-check form-switch form-check-custom form-check-solid">
-                                        <input class="form-check-input" type="checkbox" value="sudah" id="order_pelunasan" name="pelunasan"/>
-                                        <label class="form-check-label" for="pelunasan">Belum / Sudah</label>
-                                    </div>
-                                    <small class="text-danger"><strong id="order_pelunasan_error"></strong></small>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="harga_rinci" class="required form-label">Hitung Harga Rinci</label>
-                                    <div class="form-check form-switch form-check-custom form-check-solid">
-                                        <input class="form-check-input" type="checkbox" value="ya" id="order_harga_rinci" name="harga_rinci"/>
-                                        <label class="form-check-label" for="harga_rinci">Tidak / Ya</label>
-                                    </div>
-                                    <small class="text-danger"><strong id="order_harga_rinci_error"></strong></small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="modal_sales" class="required form-label">Modal Sales</label>
-                            <input type="text" id="order_modal_sales" name="modal_sales" class="form-control form-control-solid" placeholder="Modal Sales"/>
-                            <small class="text-danger"><strong id="order_modal_sales_error"></strong></small>
-                        </div>
-                        <div class="mb-3">
-                            <label for="tanggal_order" class="required form-label">Tanggal Order</label>
-                            <input type="date" id="order_tanggal_order" name="modal_sales" class="form-control form-control-solid" placeholder="Tanggal Order"/>
-                            <small class="text-danger"><strong id="order_tanggal_order_error"></strong></small>
+
                         </div>
                     </div>
-                </div>
                 </form>
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                 <button type="button" id="submit-form-order" class="btn btn-primary my-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" tabindex="-1" id="modal-add-customer-only">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Tambah Konsumen Baru</h5>
-                <!--begin::Close-->
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close" id="modal-add-customer-only-close-btn">
-                    <span class="svg-icon svg-icon-2x"><i class="fas fa-times"></i></span>
-                </div>
-                <!--end::Close-->
-            </div>
-
-            <div class="modal-body mt-n5">
-                <form action="" id="form-konsumen-only">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="nama" class="required form-label">Nama</label>
-                                <input type="text" id="konsumen-nama" name="nama" class="form-control form-control-solid" placeholder="Nama Konsumen"/>
-                                <small class="text-danger"><strong id="konsumen-nama_error"></strong></small>
-                            </div>
-                            <div class="mb-3">
-                                <label for="nohp" class="required form-label">No HP</label>
-                                <input type="number" id="konsumen-nohp" name="nohp" class="form-control form-control-solid" placeholder="Nomor Handphone"/>
-                                <small class="text-danger"><strong id="konsumen-nohp_error"></strong></small>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="instansi_id" class="required form-label">Tipe Instansi</label>
-                                <select id="konsumen-instansi_id" name="instansi_id" class="form-select form-control form-control-solid" aria-label="Select example">
-                                    <option selected disabled>- Pilih Tipe Instansi</option>
-                                    <?php foreach($instansi->result() as $i){ ?>
-                                        <option value="<?= $i->id ?>"> <?= $i->instansi ?></option>
-                                    <?php } ?>
-                                </select>
-                                <small class="text-danger"><strong id="konsumen-instansi_id_error"></strong></small>
-                            </div>
-                            <div class="mb-3">
-                                <label for="instansi" class="required form-label">Instansi</label>
-                                <input type="text" id="konsumen-instansi" name="instansi" class="form-control form-control-solid" placeholder="Nama Instansi"/>
-                                <small class="text-danger"><strong id="konsumen-instansi_error"></strong></small>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="submit-form-konsumen-only" class="btn btn-primary my-primary">Save changes</button>
             </div>
         </div>
     </div>

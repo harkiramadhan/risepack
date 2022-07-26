@@ -13,7 +13,7 @@ var KTDatatablesServerSide = function () {
             searchDelay: 500,
             processing: true,
             serverSide: true,
-            order: [[5, 'desc']],
+            order: [[2, 'desc']],
             stateSave: true,
             select: {
                 style: 'os',
@@ -86,7 +86,7 @@ var KTDatatablesServerSide = function () {
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
-                                        Edit
+                                        <i class="fas fa-pencil-alt me-5"></i>Edit
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
@@ -94,7 +94,7 @@ var KTDatatablesServerSide = function () {
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3" data-kt-docs-table-filter="delete_row">
-                                        Delete
+                                        <i class="fas fa-trash me-5"></i>Delete
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
@@ -391,8 +391,6 @@ $('#tanggal').change(function(){
 
 })
 
-$('#pills-profile-tab').attr('disabled', true)
-
 $('#kontrak').change(function(){
     $('#deal_status_id').attr('disabled', false)
 })
@@ -420,19 +418,6 @@ $('#deal_status_id').change(function(){
     })
 })
 
-$('#harga_rinci').change(function(){
-    alert($(this).val())
-})
-
-$("#harga_rinci").on('change', function() {
-    if ($(this).is(':checked')) {
-        $(this).attr('value', 'true')
-    } else {
-        $(this).attr('value', 'false')
-    }
-    
-    alert($('#harga_rinci').val())
-})
 
 $(document).ready(function(){
     const format = (item) => {
@@ -477,65 +462,7 @@ $(document).ready(function(){
 
 /* Form Inputs */
 $('#submit-form-order').click(function(){
-    var form = $('#form-add-new-order').serialize()
-
-    $.ajax({
-        url: baseUrl + 'crm/createOrder',
-        type: 'post',
-        data: form,
-        success: function(res){
-            if(res.status === 400){
-                var errorData = res.error
-                var successData = res.success
-
-                for(let s=0; s < successData.length; ++s){
-                    $('#order_' + successData[s].field).removeClass('is-invalid')
-                    $('#order_' + successData[s].field).addClass('is-valid')
-                }
-
-                for (let i = 0; i < errorData.length; ++i) {
-                    $('#order_' + errorData[i].field).removeClass('is-valid')
-                    $('#order_' + errorData[i].field).addClass('is-invalid')
-                    $('#order_' + errorData[i].field + '_error').text(errorData[i].message)
-                }
-
-                Swal.fire({
-                    text: "Data Gagal Di Simpan, Silahkan Perbaiki Terlebih Dahulu",
-                    icon: "warning",
-                    showCancelButton: false,
-                    buttonsStyling: false,
-                    showLoaderOnConfirm: true,
-                    confirmButtonText: "Oke !",
-                    customClass: {
-                        confirmButton: "btn fw-bold btn-success",
-                    },
-                })
-            }else{
-                Swal.fire({
-                    text: "Data Berhasil Di Simpan",
-                    icon: "success",
-                    showCancelButton: false,
-                    buttonsStyling: false,
-                    showLoaderOnConfirm: true,
-                    confirmButtonText: "Oke !",
-                    customClass: {
-                        confirmButton: "btn fw-bold btn-success",
-                    },
-                })
-                $('#kt_datatable_example_1').DataTable().ajax.reload()
-                Swal.fire(
-                    'Success!',
-                    'Data Berhasil Di Simpan!',
-                    'success'
-                )
-                $('#modal-order-close-btn').click()
-            }
-        }
-    })
-})
-
-$('#submit-form-konsumen').click(function(){
-    var form = $('#form-konsumen').serialize()
+    var form = $('#form-order').serialize()
     
     $.ajax({
         url: baseUrl + 'crm/create',
@@ -582,9 +509,7 @@ $('#submit-form-konsumen').click(function(){
                     },
                 })
                 $('#kt_datatable_example_1').DataTable().ajax.reload()
-                console.log(res)
-                $('#pills-profile-tab').attr('disabled', false)
-                $('#pills-profile-tab').click()
+                $('#modal-add-order-close').click();
             }
         }
     })
