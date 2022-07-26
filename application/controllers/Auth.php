@@ -18,6 +18,7 @@ class Auth extends CI_Controller{
             $data = $cek->row();
             $this->session->set_userdata('masuk', TRUE);
             $this->session->set_userdata('userid', $data->id);
+            $this->session->set_userdata('picid', $data->pic_id);
             $this->session->set_userdata('email', $data->email);
             $this->session->set_userdata('role', $data->role);
             $this->session->set_flashdata('success', "Welcome! " . $data->email);

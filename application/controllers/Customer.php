@@ -243,9 +243,9 @@ class Customer extends CI_Controller{
     }
 
     function getLastCustomer(){
-        $get = $this->db->limit(1)->order_by('order_code', "DESC")->get('orders');
+        $get = $this->db->limit(1)->order_by('kode', "DESC")->get('orders');
         if($get->num_rows() > 0){
-            $order = sprintf("%03d", $get->row()->order_code);
+            $order = sprintf("%03d", $get->row()->kode + 1);
         }else{
             $order = sprintf("%03d", 1);
         }

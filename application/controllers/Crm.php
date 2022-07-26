@@ -146,13 +146,15 @@ class CRM extends CI_Controller{
             $this->output->set_content_type('application/json')->set_output(json_encode($err));
                 
         }else{
+            $kode = explode('/', $this->input->post('order_code', TRUE));
+            $order = (int)$kode[3];
             $datas = [
                 'customer_id' => $this->input->post('customer_id', TRUE),
                 'tanggal' => $this->input->post('tanggal', TRUE),
                 'sumber_id' => $this->input->post('sumber_id', TRUE),
                 'kontrak' => $this->input->post('kontrak', TRUE),
-                'order_code' => $this->input->post('order_code', TRUE),
                 'kode_order' => $this->input->post('order_code', TRUE),
+                'kode' => $order,
                 'pic_id' => $this->input->post('pic_id', TRUE),
                 'deal_status_id' => $this->input->post('deal_status_id', TRUE),
                 'order_status_id' => $this->input->post('order_status_id', TRUE),

@@ -2613,7 +2613,7 @@
                 <!--end::Close-->
             </div>
 
-            <div class="modal-body mt-n10">
+            <div class="modal-body mt-n5">
                 <form action="" id="form-order">
                     <div class="row">
                         <div class="col-lg-6">
@@ -2658,7 +2658,7 @@
                                 <select id="pic_id" name="pic_id" class="form-select form-control form-control-solid" aria-label="Select example">
                                     <option selected disabled>- Pilih PIC</option>
                                     <?php foreach($pic->result() as $p){ ?>
-                                        <option value="<?= $p->id ?>"> <?= $p->nama ?></option>
+                                        <option value="<?= $p->id ?>" <?= ($p->id == $this->session->userdata('picid')) ? 'selected' : '' ?>> <?= $p->nama ?></option>
                                     <?php } ?>
                                 </select>
                                 <small class="text-danger"><strong id="pic_id_error"></strong></small>

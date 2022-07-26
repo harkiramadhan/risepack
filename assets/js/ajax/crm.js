@@ -85,7 +85,10 @@ var KTDatatablesServerSide = function () {
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
+                                       <a href="#" 
+                                            onclick="editOrder('${row.id}')"
+                                            class="menu-link px-3"
+                                        >
                                         <i class="fas fa-pencil-alt me-5"></i>Edit
                                     </a>
                                 </div>
@@ -418,7 +421,6 @@ $('#deal_status_id').change(function(){
     })
 })
 
-
 $(document).ready(function(){
     const format = (item) => {
         if (!item.id) {
@@ -459,6 +461,7 @@ $(document).ready(function(){
         $(this).data('select2').$dropdown.find(':input.select2-search__field').attr('placeholder', 'Cari Nama Konsumen')
     })
 })
+
 
 /* Form Inputs */
 $('#submit-form-order').click(function(){
@@ -509,7 +512,8 @@ $('#submit-form-order').click(function(){
                     },
                 })
                 $('#kt_datatable_example_1').DataTable().ajax.reload()
-                $('#modal-add-order-close').click();
+                $('#form-order')[0].reset()
+                $('#modal-add-order-close').click()
             }
         }
     })
