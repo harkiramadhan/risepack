@@ -58,7 +58,7 @@
                                 <!--begin::Toolbar-->
                                 <div class="d-flex justify-content-end">
                                     <!--begin::Add customer-->
-                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-add-customer-only" data-bs-toggle="tooltip" title="Add Customer">
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-add-customer" data-bs-toggle="tooltip" title="Add Customer">
                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                                     <span class="svg-icon svg-icon-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -2658,7 +2658,7 @@
                                 <select id="pic_id" name="pic_id" class="form-select form-control form-control-solid" aria-label="Select example">
                                     <option selected disabled>- Pilih PIC</option>
                                     <?php foreach($pic->result() as $p){ ?>
-                                        <option value="<?= $p->id ?>" <?= ($p->id == $this->session->userdata('picid')) ? 'selected' : '' ?>> <?= $p->nama ?></option>
+                                        <option value="<?= $p->id ?>"> <?= $p->nama ?></option>
                                     <?php } ?>
                                 </select>
                                 <small class="text-danger"><strong id="pic_id_error"></strong></small>
@@ -2709,6 +2709,176 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                 <button type="button" id="submit-form-order" class="btn btn-primary my-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modal-edit-order">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tambah Order Baru</h5>
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" id="modal-add-order-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="svg-icon svg-icon-2x"><i class="fas fa-times"></i></span>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body mt-n5">
+                <form action="" id="form-edit-order">
+                    <input type="hidden" name="id" id="edit-order-id">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="customer_id" class="required form-label">Konsumen</label>
+                                <select name="customer_id" id="edit-order-customer_id" class="form-select form-select-solid">
+                                    <option value="" selected disabled> - Pilih Konsumen</option>
+                                    
+                                </select>
+                                <small class="text-danger"><strong id="edit-order-customer_id_error"></strong></small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tanggal" class="required form-label">Tanggal</label>
+                                <input type="date" id="edit-order-tanggal" name="tanggal" class="form-control form-control-solid" placeholder="Tanggal"/>
+                                <small class="text-danger"><strong id="edit-order-tanggal_error"></strong></small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="sumber" class="required form-label">Sumber</label>
+                                <select id="edit-order-sumber_id" name="sumber_id" class="form-select form-control form-control-solid" aria-label="Select example" data-allow-clear="true">
+                                    <option selected disabled>- Pilih Sumber</option>
+                                    <?php foreach($sumber->result() as $s){ ?>
+                                        <option value="<?= $s->id ?>" data-kode="<?= $s->kode ?>"> <?= $s->sumber ?></option>
+                                    <?php } ?>
+                                </select>
+                                <small class="text-danger"><strong id="edit-order-sumber_id_error"></strong></small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="kontrak" class="required form-label">Waktu Kontrak</label>
+                                <input type="date" id="edit-order-kontrak" name="kontrak" class="form-control form-control-solid" placeholder="Waktu Kontrak"/>
+                                <small class="text-danger"><strong id="edit-order-kontrak_error"></strong></small>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="order_code" class="required form-label">Kode Order</label>
+                                <input type="text" id="edit-order-order_code" name="order_code" class="form-control form-control-solid" placeholder="Kode Order"/>
+                                <small class="text-danger"><strong id="edit-order-order_code_error"></strong></small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="pic_id" class="required form-label">PIC</label>
+                                <select id="edit-order-pic_id" name="pic_id" class="form-select form-control form-control-solid" aria-label="Select example">
+                                    <option selected disabled>- Pilih PIC</option>
+                                    <?php foreach($pic->result() as $p){ ?>
+                                        <option value="<?= $p->id ?>"> <?= $p->nama ?></option>
+                                    <?php } ?>
+                                </select>
+                                <small class="text-danger"><strong id="edit-order-pic_id_error"></strong></small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="bulan" class="form-label">Bulan</label>
+                                <select id="edit-order-bulan" name="bulan" class="form-select form-control form-control-solid" aria-label="Select example" disabled>
+                                    <option selected disabled>- Pilih Bulan</option>
+                                    <?php foreach(range(1, 12) as $b){ ?>
+                                        <option value="<?= $b ?>" <?= ((int)date('m') == $b) ? 'selected' : '' ?>> <?= bulan($b) ?></option>
+                                    <?php } ?>
+                                </select>
+                                <small class="text-danger"><strong id="edit-order-bulan_error"></strong></small>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="deal_status_id" class="required form-label">Status Deal</label>
+                                        <select id="edit-order-deal_status_id" name="deal_status_id" class="form-select form-control form-control-solid" aria-label="Select example" disabled>
+                                            <option selected disabled>- Pilih Status Deal</option>
+                                            <?php foreach($deal_status->result() as $ds): ?>
+                                                <option value="<?= $ds->id ?>"> <?= $ds->status ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                        <small class="text-danger"><strong id="edit-order-deal_status_id_error"></strong></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="order_status_id" class="required form-label">Status Order</label>
+                                        <div class="order-status">
+                                            <select id="edit-order-order_status_id" name="order_status_id" class="form-select form-control form-control-solid" aria-label="Select example">
+                                                <option selected disabled>- Pilih Status Order</option>
+                                            </select>
+                                        </div>
+                                        <small class="text-danger"><strong id="edit-order-order_status_id_error"></strong></small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="submit-form-order" class="btn btn-primary my-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modal-add-customer">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tambah Konsumen Baru</h5>
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close" id="modal-add-customer-only-close-btn">
+                    <span class="svg-icon svg-icon-2x"><i class="fas fa-times"></i></span>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body mt-n5">
+                <form action="" id="form-add-customer">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="nama" class="required form-label">Nama</label>
+                                <input type="text" id="nama" name="nama" class="form-control form-control-solid" placeholder="Nama Konsumen"/>
+                                <small class="text-danger"><strong id="nama_error"></strong></small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nohp" class="required form-label">No HP</label>
+                                <input type="number" id="nohp" name="nohp" class="form-control form-control-solid" placeholder="Nomor Handphone"/>
+                                <small class="text-danger"><strong id="nohp_error"></strong></small>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="instansi_id" class="required form-label">Tipe Instansi</label>
+                                <select id="instansi_id" name="instansi_id" class="form-select form-control form-control-solid" aria-label="Select example">
+                                    <option selected disabled>- Pilih Tipe Instansi</option>
+                                    <?php foreach($instansi->result() as $i){ ?>
+                                        <option value="<?= $i->id ?>"> <?= $i->instansi ?></option>
+                                    <?php } ?>
+                                </select>
+                                <small class="text-danger"><strong id="instansi_id_error"></strong></small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="instansi" class="required form-label">Instansi</label>
+                                <input type="text" id="instansi" name="instansi" class="form-control form-control-solid" placeholder="Nama Instansi"/>
+                                <small class="text-danger"><strong id="instansi_error"></strong></small>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="submit-form-add-customer" class="btn btn-primary my-primary">Save changes</button>
             </div>
         </div>
     </div>

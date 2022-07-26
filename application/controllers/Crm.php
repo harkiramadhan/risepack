@@ -151,6 +151,7 @@ class CRM extends CI_Controller{
             $datas = [
                 'customer_id' => $this->input->post('customer_id', TRUE),
                 'tanggal' => $this->input->post('tanggal', TRUE),
+                'bulan' => $this->input->post('bulan', TRUE),
                 'sumber_id' => $this->input->post('sumber_id', TRUE),
                 'kontrak' => $this->input->post('kontrak', TRUE),
                 'kode_order' => $this->input->post('order_code', TRUE),
@@ -319,6 +320,21 @@ class CRM extends CI_Controller{
                 </select>
             <?php
        }
+    }
+
+    function ajax_get_order_by_id(){
+        $id = $this->input->get('id', TRUE);
+        $get = $this->db->get('orders', ['id' => $id])->row();
+        $this->output->set_content_type('application/json')->set_output(json_encode($get));
+    }
+
+    function ajax_get_order(){
+        $get = $this->db->select('o.*, c.nama')
+                        ->from('orders o')
+                        ->join('customer c', 'o.customer_id = c.id')
+                        ->like('c.nama', $this->input->get("q", TRUE))
+                        ->or_like('o.kode_order', $this->input->get("q", TRUE))->get()->result();
+        $this->output->set_content_type('application/json')->set_output(json_encode($get));
     }
 
     /* Datatables */
