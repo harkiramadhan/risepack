@@ -46,6 +46,15 @@ var KTDatatablesServerSide = function () {
                     }
                 },
                 {
+                    targets: 1,
+                    orderable: false,
+                    render: function (data, type, row, meta) {
+                        return (
+                            "<a class='fw-bolder text-hover-primary' href='" + baseUrl + "orders/" + row.id + "' >" + data + "</a>"
+                        )
+                    }
+                },
+                {
                     targets: 5,
                     orderable: false,
                     render: function (data, type, row, meta) {

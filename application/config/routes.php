@@ -54,3 +54,4 @@ $route['404_override'] = 'pages/notfound';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['customer/(:num)'] = 'customer/detail/$1';
+$route['orders/(:num)'] = 'orders/detail/$1';

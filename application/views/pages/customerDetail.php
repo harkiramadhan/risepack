@@ -90,7 +90,7 @@
                                     <tr>    
                                         <td class="text-center"><?= $no++ ?></td>
                                         <td><?= longdate_indo(date('Y-m-d', strtotime($row->tanggal))) ?></td>
-                                        <td class="fw-bolder text-hover-primary "><a href="#"><?= $row->kode_order ?></a></td>
+                                        <td class="fw-bolder text-hover-primary"><a href="<?= site_url('orders/' . $row->id) ?>"><?= $row->kode_order ?></a></td>
                                         <td></td>
                                         <td><?= $row->keterangan ?></td>
                                         <td><?= rupiah($row->price) ?></td>
