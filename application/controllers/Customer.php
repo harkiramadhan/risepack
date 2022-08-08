@@ -11,11 +11,24 @@ class Customer extends CI_Controller{
     }
 
     function detail($id){
+        $customer = $this->db->select('c.*, ti.instansi tipe_instansi')
+                            ->from('customer c')
+                            ->join('tipe_instansi ti', 'c.instansi_id = ti.id')
+                            ->where('c.id', $id)->get()->row();
+
+        $orders = $this->db->select('o.*, os.keterangan')
+                            ->from('orders o')
+                            ->join('order_status os', 'o.order_status_id = os.id')
+                            ->where([
+                                'o.customer_id' => $id
+                            ])->get()->result();
         $datas = [
             'title' => 'Detail Konsumen',
             'title_desc' => 'Overview dan summary penjualan',
             'page' => 'pages/customerDetail',
-            'backUrl' => 'crm'
+            'backUrl' => 'crm',
+            'customer' => $customer,
+            'orders' => $orders
         ];
         $this->load->view('template2', $datas);
     }
