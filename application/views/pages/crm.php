@@ -5,12 +5,12 @@
         <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder mt-n12">
             <!--begin::Nav item-->
             <li class="nav-item">
-                <a class="nav-link text-white py-5 me-6 active" data-bs-toggle="tab" href="#tab_konsumen">Data Konsumen</a>
+                <a class="nav-link text-white py-5 me-6 active" data-bs-toggle="tab" href="#tab_konsumen">CRM</a>
             </li>
             <!--end::Nav item-->
             <!--begin::Nav item-->
             <li class="nav-item">
-                <a class="nav-link text-white py-5 me-6" data-bs-toggle="tab" href="#tab_crm">CRM</a>
+                <a class="nav-link text-white py-5 me-6" data-bs-toggle="tab" href="#tab_crm">Data Order</a>
             </li>
             <!--end::Nav item-->
             <!--begin::Nav item-->
