@@ -58,6 +58,18 @@
                                 <!--begin::Toolbar-->
                                 <div class="d-flex justify-content-end">
                                     <!--begin::Add customer-->
+                                    <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#modal-import-customer" data-bs-toggle="tooltip" title="Import Customer">
+                                    <!--begin::Svg Icon | path: assets/media/icons/duotune/files/fil022.svg-->
+                                    <span class="svg-icon svg-icon-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path opacity="0.3" d="M5 16C3.3 16 2 14.7 2 13C2 11.3 3.3 10 5 10H5.1C5 9.7 5 9.3 5 9C5 6.2 7.2 4 10 4C11.9 4 13.5 5 14.3 6.5C14.8 6.2 15.4 6 16 6C17.7 6 19 7.3 19 9C19 9.4 18.9 9.7 18.8 10C18.9 10 18.9 10 19 10C20.7 10 22 11.3 22 13C22 14.7 20.7 16 19 16H5ZM8 13.6H16L12.7 10.3C12.3 9.89999 11.7 9.89999 11.3 10.3L8 13.6Z" fill="black"/>
+                                            <path d="M11 13.6V19C11 19.6 11.4 20 12 20C12.6 20 13 19.6 13 19V13.6H11Z" fill="black"/>
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->Import Customer</button>
+                                    <!--end::Add customer-->
+
+                                    <!--begin::Add customer-->
                                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-add-customer" data-bs-toggle="tooltip" title="Add Customer">
                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                                     <span class="svg-icon svg-icon-2">
@@ -2879,6 +2891,35 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                 <button type="button" id="submit-form-add-customer" class="btn btn-primary my-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modal-import-customer">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Import Konsumen Baru</h5>
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close" id="modal-add-customer-only-close-btn">
+                    <span class="svg-icon svg-icon-2x"><i class="fas fa-times"></i></span>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body mt-n5">
+                <form action="" id="#">
+                    <div class="mb-3">
+                        <label for="nama" class="required form-label">Pilih File</label>
+                        <input type="file" id="file" name="file" class="form-control form-control-solid" placeholder="Nama Konsumen"/>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="submit-form-import-customer" class="btn btn-primary my-primary">Save changes</button>
             </div>
         </div>
     </div>

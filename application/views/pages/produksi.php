@@ -291,3 +291,73 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" tabindex="-1" id="modal-add-spk">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title modal-title-add-spk">Tambah SPK - </h5>
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close" id="modal-add-spk-close-btn">
+                    <span class="svg-icon svg-icon-2x"><i class="fas fa-times"></i></span>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body mt-n5">
+                <form id="form-add-spk">
+                    <input type="hidden" class="orderid" name="orderid"  value="">
+                    <input type="hidden" class="produksiid" name="produksiid" value="">
+                    <div class="mb-3">
+                        <label for="deadline" class="required form-label">Deadline</label>
+                        <input type="date" id="deadline_spk" name="deadline" class="form-control form-control-solid" placeholder="Deadline"/>
+                    </div>
+                    <label class="mt-3 mb-3" for="">Progress Produksi</label>
+                    <!--begin::Accordion-->
+                    <div class="accordion accordion-produksi mb-10" id="kt_accordion_1">
+                        
+                    
+                    </div>
+                    <!--end::Accordion-->
+                    </form>
+                <button type="buttton" class="btn btn-sm btn-success mt-3 w-100 btn-add-progress"><i class="fas fa-plus me-2"></i> Tambah Progress Produksi</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="submit-form-add-spk" class="btn btn-primary my-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modal-add-progress">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Progress Produksi Baru</h5>
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close" id="modal-add-progress-close-btn">
+                    <span class="svg-icon svg-icon-2x"><i class="fas fa-times"></i></span>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body mt-n5">
+                <div class="mb-3">
+                    <label for="deadline" class="required form-label">Jenis Progress Produksi</label>
+                    <select id="select-progress" class="form-select form-select-solid">
+                        <option value="" selected disabled> - Pilih Jenis Progress Produksi</option>
+                        <?php foreach($progress_produksi->result() as $row){ ?>
+                            <option value="<?= $row->id ?>"> <?= $row->progress ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                <button type="button" id="btn-add-progress" class="btn btn-primary my-primary">Tambah</button>
+            </div>
+        </div>
+    </div>
+</div>

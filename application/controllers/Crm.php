@@ -88,6 +88,20 @@ class CRM extends CI_Controller{
                 'errors' => [
                     'required' => 'Order Status Wajib Di Isi'
                 ]
+            ],[
+                'field' => 'order_status_id',
+                'label' => 'Order Status',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Order Status Wajib Di Isi'
+                ]
+            ],[
+                'field' => 'bulan',
+                'label' => 'Bulan',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Bulan Wajib Di Isi'
+                ]
             ]
         ];
         $this->form_validation->set_rules($config);
@@ -341,7 +355,7 @@ class CRM extends CI_Controller{
     function datatable(){
         $datatables = new Datatables(new CodeigniterAdapter);
         $datatables->query("SELECT 
-                            o.kode_order, o.id, o.tanggal, o.deal_status_id, o.price,
+                            o.kode_order, o.id, o.tanggal, o.deal_status_id, o.price, o.customer_id,
                             c.nama, c.instansi_id, 
                             p.nama AS nama_pic, 
                             s.sumber, 

@@ -15,6 +15,7 @@ class Produksi extends CI_Controller{
             'title' => 'Data Produksi',
             'title_desc' => 'Overview dan summary penjualan',
             'page' => 'pages/produksi',
+            'progress_produksi' => $this->db->get('progress_produksi'),
             'ajax' => [
                 'produksi'
             ]
@@ -115,10 +116,81 @@ class Produksi extends CI_Controller{
         }
     }
 
+    function createSpk(){
+        $produksiid = $this->input->post('produksiid', TRUE);
+        $progressid = $this->input->post('progressid[]', TRUE);
+        $result = [];
+
+        if($progressid > 0){
+            foreach($progressid as $key => $id){
+                $harga = $this->input->post('harga[]', TRUE);
+                $qty = $this->input->post('qty[]', TRUE);
+                $deskripsi = $this->input->post('deskripsi[]', TRUE);
+    
+                $datas = [
+                    'produksi_id' => $produksiid,
+                    'progress_id' => $id,
+                    'harga' => $harga[$key],
+                    'qty' => $qty[$key],
+                    'total' => $harga[$key] * $qty[$key],
+                    'deskripsi' => $deskripsi[$key]
+                ];
+                array_push($result, $datas);
+                $cek = $this->db->get_where('produksi_progress', [
+                    'produksi_id' => $produksiid,
+                    'progress_id' => $id,
+                ]);
+                if($cek->num_rows() > 0){
+                    $this->db->where('id', $cek->row()->id)->update('produksi_progress', $datas);
+                }else{
+                    $this->db->insert('produksi_progress', $datas);   
+                }
+            }
+        }
+
+        if($result > 0){
+            $res = [
+                'status' => 200,
+                'produksiid' => $produksiid,
+                'data' => $result
+            ];
+        }else{
+            $res = [
+                'status' => 400,
+                'produksiid' => $produksiid,
+                'data' => $result
+            ];
+        }
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($res));
+    }
+
     /* Ajax */
+    function ajaxGetProduksi(){
+        $id = $this->input->get('produksiid', TRUE);
+        $get = $this->db->select('c.nama, o.kode_order, o.id orderid, p.deadline, p.id, p.catatan')
+                        ->from('produksi p')
+                        ->join('orders o', "p.order_id = o.id")
+                        ->join('customer c', "o.customer_id = c.id")
+                        ->where('p.id', $id)->get()->row();
+
+        $progress = $this->db->select('pp.*, pr.progress')
+                            ->from('produksi_progress pp')
+                            ->join('progress_produksi pr', 'pp.progress_id = pr.id')
+                            ->where('pp.produksi_id', $id)
+                            ->order_by('pp.timestamp', "ASC")
+                            ->get()->result();
+        
+        $res = [
+            'data' => $get,
+            'detail' => $progress
+        ];
+        $this->output->set_content_type('application/json')->set_output(json_encode($res));
+    }
+
     function datatable(){
         $datatables = new Datatables(new CodeigniterAdapter);
-        $datatables->query("SELECT c.nama, o.kode_order, p.deadline, p.id, p.catatan
+        $datatables->query("SELECT c.nama, o.kode_order, o.id orderid, p.deadline, p.id, p.catatan
                             FROM produksi AS p
                             JOIN orders AS o ON p.order_id = o.id
                             JOIN customer AS c ON o.customer_id = c.id

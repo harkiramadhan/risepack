@@ -263,6 +263,7 @@ License: For each use you must have a valid license purchased only from above li
 		<script src="<?= base_url('assets/js/custom/utilities/modals/upgrade-plan.js') ?>"></script>
 		<script src="<?= base_url('assets/js/custom/utilities/modals/create-app.js') ?>"></script>
 		<script src="<?= base_url('assets/js/custom/utilities/modals/users-search.js') ?>"></script>
+		<script src="<?= base_url('assets/plugins/custom/formrepeater/formrepeater.bundle.js') ?>"></script>
 		<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 		<!--end::Page Custom Javascript-->
 

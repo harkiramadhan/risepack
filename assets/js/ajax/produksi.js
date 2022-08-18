@@ -41,6 +41,15 @@ var KTDatatablesServerSideCustomer = function () {
                     }
                 },
                 {
+                    targets: 1,
+                    orderable: false,
+                    render: function (data, type, row, meta) {
+                        return (
+                            "<a class='fw-bolder text-hover-primary' href='" + baseUrl + "orders/" + row.orderid + "' >" + data + "</a>"
+                        )
+                    }
+                },
+                {
                     targets: -1,
                     data: null,
                     orderable: false,
@@ -48,51 +57,50 @@ var KTDatatablesServerSideCustomer = function () {
                     render: function (data, type, row, meta) {
                         return `
                             <div class="btn-group btn-group-sm">
-                            <button class="btn btn-sm btn-primary me-1"><i class="fas fa-plus me-2"></i> SPK</button>
-                            <button class="btn btn-sm btn-primary me-1"><i class="fas fa-pencil-alt me-2"></i> SPK</button>
-                            <a href="" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
-                                Actions
-                                <span class="svg-icon svg-icon-5 m-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                                            <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999)"></path>
-                                        </g>
-                                    </svg>
-                                </span>
-                            </a>
-                            <!--begin::Menu-->
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="${baseUrl}customer/${row.id}" class="menu-link px-3">
-                                        <i class="fas fa-eye me-5"></i>Detail
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
+                                <button class="btn btn-sm btn-primary me-1" onclick="showModalSpk(${row.id})" ><i class="fas fa-plus me-2"></i> SPK</button>
+                                <a href="" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
+                                    Actions
+                                    <span class="svg-icon svg-icon-5 m-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999)"></path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </a>
+                                <!--begin::Menu-->
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="${baseUrl}customer/${row.id}" class="menu-link px-3">
+                                            <i class="fas fa-eye me-5"></i>Detail
+                                        </a>
+                                    </div>
+                                    <!--end::Menu item-->
 
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" 
-                                        onclick="editCustomer('${row.id}','${row.nama}','${row.nohp}','${row.instansi_id}','${row.instansi}')"
-                                        class="menu-link px-3"
-                                    >
-                                        <i class="fas fa-pencil-alt me-5"></i>Edit
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="#" 
+                                            onclick="editCustomer('${row.id}','${row.nama}','${row.nohp}','${row.instansi_id}','${row.instansi}')"
+                                            class="menu-link px-3"
+                                        >
+                                            <i class="fas fa-pencil-alt me-5"></i>Edit
+                                        </a>
+                                    </div>
+                                    <!--end::Menu item-->
 
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" 
-                                        onclick="deleteCustomer('${row.id}','${row.nama}')"
-                                        class="menu-link px-3">
-                                        <i class="fas fa-trash me-5"></i>Delete
-                                    </a>
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="#" 
+                                            onclick="deleteCustomer('${row.id}','${row.nama}')"
+                                            class="menu-link px-3">
+                                            <i class="fas fa-trash me-5"></i>Delete
+                                        </a>
+                                    </div>
+                                    <!--end::Menu item-->
                                 </div>
-                                <!--end::Menu item-->
-                            </div>
-                            <!--end::Menu-->
+                                <!--end::Menu-->
                             </div>
                         `
                     },
@@ -236,4 +244,178 @@ $('#submit-form-add-produksi').click(function(){
             }
         }
     })
+})
+
+function showModalSpk(produksiid){
+    $('.accordion-produksi').empty()
+    $.ajax({
+        url: baseUrl + 'produksi/ajaxGetProduksi',
+        type: 'get',
+        data: {produksiid : produksiid},
+        success: function(res){
+            $('.orderid').val(res.data.orderid)
+            $('.produksiid').val(produksiid)
+            $('#deadline_spk').val(res.data.deadline)
+            $('.modal-title-add-spk').text('Tambah SPK -' + res.data.kode_order + ' - ' + res.data.nama)
+            $('#modal-add-spk').modal('show')
+
+            var progress = res.detail
+            if(progress.length > 0){
+                for(let s=0; progress.length; ++s){
+                    $('.accordion-produksi').append("\
+                        <div class='accordion-item' id='accordion-" + progress[s].progress_id + "'>\
+                            <h2 class='accordion-header' id='kt_accordion_1_header_" + progress[s].progress_id + "'>\
+                                <button class='accordion-button fs-4 fw-bold collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#kt_accordion_1_body_" + progress[s].progress_id + "' aria-expanded='true' aria-controls='kt_accordion_1_body_" + progress[s].progress_id + "'>" + progress[s].progress + "</button>\
+                            </h2>\
+                            <div id='kt_accordion_1_body_" + progress[s].progress_id + "' class='accordion-collapse collapse' aria-labelledby='kt_accordion_1_header_" + progress[s].progress_id + "' data-bs-parent='#kt_accordion_1'>\
+                                <div class='accordion-body'>\
+                                    <div class='row'>\
+                                        <input type='hidden' name='progressid[]' value='"+ progress[s].progress_id +"'/>\
+                                        <div class='col-lg-5'>\
+                                            <div class='mb-10'>\
+                                                <label for='exampleFormControlInput1' class='required form-label'>Harga Satuan</label>\
+                                                <input type='number' name='harga[]' class='form-control form-control-solid' value='"+  progress[s].harga +"' placeholder='Masukkan Harga Satuan'/>\
+                                            </div>  \
+                                        </div>\
+                                        <div class='col-lg-2'>\
+                                            <div class='mb-10'>\
+                                                <label for='exampleFormControlInput1' class='required form-label'>Qty</label>\
+                                                <input type='number' name='qty[]' class='form-control form-control-solid' value='"+  progress[s].qty +"' placeholder='Qty'/>\
+                                            </div>  \
+                                        </div>\
+                                        <div class='col-lg-5'>\
+                                            <div class='mb-10'>\
+                                                <label for='exampleFormControlInput1' class='required form-label'>Total Harga</label>\
+                                                <input type='number' name='total[]' class='form-control form-control-solid' value='"+  progress[s].total +"' placeholder='Total Harga'/>\
+                                            </div>  \
+                                        </div>\
+                                        <div class='col-lg-12'>\
+                                            <div class='mb-5'>\
+                                                <label for='exampleFormControlInput1' class='required form-label'>Deskripsi</label>\
+                                                <textarea name='deskripsi[]' id='' cols='30' rows='5' class='form-control form-control-solid'>" + progress[s].deskripsi + "</textarea>\
+                                            </div>\
+                                        </div>\
+                                        <div class='col-lg-12'>\
+                                            <button class='btn btn-sm btn-danger w-100 remove-progress' data-id='" + progress[s].progress_id + "' type='button'><i class='fas fa-trash me-3'></i> " + progress[s].progress + "</button>\
+                                        </div>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>\
+                        <script>\
+                            $('.remove-progress').click(function(){\
+                                var id = $(this).attr('data-id');\
+                                $('#accordion-' + id).remove();\
+                            })\
+                        </script>\
+                    ")
+                }
+            }
+        }
+    })
+}
+
+$('#submit-form-add-spk').click(function(){
+    var form = $('#form-add-spk').serialize()
+    $.ajax({
+        url: baseUrl + 'produksi/createSpk',
+        type: 'post',
+        data: form,
+        success: function(res){
+            if(res.status === 200){
+                Swal.fire({
+                    text: "Data Berhasil Di Simpan",
+                    icon: "success",
+                    showCancelButton: false,
+                    buttonsStyling: false,
+                    showLoaderOnConfirm: true,
+                    confirmButtonText: "Oke !",
+                    customClass: {
+                        confirmButton: "btn fw-bold btn-success",
+                    },
+                })
+
+                $('#modal-add-spk-close-btn').click()
+                showModalSpk(res.produksiid)
+
+            }else{
+                Swal.fire({
+                    text: "Tidak Ada Perubahan",
+                    icon: "warning",
+                    showCancelButton: false,
+                    buttonsStyling: false,
+                    showLoaderOnConfirm: true,
+                    confirmButtonText: "Oke !",
+                    customClass: {
+                        confirmButton: "btn fw-bold btn-success",
+                    },
+                })
+            }
+        }
+    })
+})
+
+$('.btn-add-progress').click(function(){
+    $('#modal-add-progress').modal('show')
+})
+
+$('#btn-add-progress').click(function(){
+    var progressid = $('#select-progress').val()
+    var progressName =  $("#select-progress option:selected").text()
+
+    $('.accordion-produksi').append("\
+        <div class='accordion-item' id='accordion-" + progressid + "'>\
+            <h2 class='accordion-header' id='kt_accordion_1_header_" + progressid + "'>\
+                <button class='accordion-button fs-4 fw-bold' type='button' data-bs-toggle='collapse' data-bs-target='#kt_accordion_1_body_" + progressid + "' aria-expanded='true' aria-controls='kt_accordion_1_body_" + progressid + "'>" + progressName + "</button>\
+            </h2>\
+            <div id='kt_accordion_1_body_" + progressid + "' class='accordion-collapse collapse show' aria-labelledby='kt_accordion_1_header_" + progressid + "' data-bs-parent='#kt_accordion_1'>\
+                <div class='accordion-body'>\
+                    <div class='row'>\
+                        <input type='hidden' name='progressid[]' value='"+ progressid +"'/>\
+                        <div class='col-lg-5'>\
+                            <div class='mb-10'>\
+                                <label for='exampleFormControlInput1' class='required form-label'>Harga Satuan</label>\
+                                <input type='number' name='harga[]' id='harga_" + progressid + "' class='form-control form-control-solid' placeholder='Masukkan Harga Satuan'/>\
+                            </div>  \
+                        </div>\
+                        <div class='col-lg-2'>\
+                            <div class='mb-10'>\
+                                <label for='exampleFormControlInput1' class='required form-label'>Qty</label>\
+                                <input type='number' name='qty[]' id='qty_" + progressid + "' class='form-control form-control-solid' placeholder='Qty'/>\
+                            </div>  \
+                        </div>\
+                        <div class='col-lg-5'>\
+                            <div class='mb-10'>\
+                                <label for='exampleFormControlInput1' class='required form-label'>Total Harga</label>\
+                                <input type='number' name='total[]' id='total_" + progressid + "' class='form-control form-control-solid' placeholder='Total Harga' disabled/>\
+                            </div>  \
+                        </div>\
+                        <div class='col-lg-12'>\
+                            <div class='mb-5'>\
+                                <label for='exampleFormControlInput1' class='required form-label'>Deskripsi</label>\
+                                <textarea name='deskripsi[]' id='' cols='30' rows='5' class='form-control form-control-solid'></textarea>\
+                            </div>\
+                        </div>\
+                        <div class='col-lg-12'>\
+                            <button class='btn btn-sm btn-danger w-100 remove-progress' data-id='" + progressid + "' type='button'><i class='fas fa-trash me-3'></i> " + progressName + "</button>\
+                        </div>\
+                    </div>\
+                </div>\
+            </div>\
+        </div>\
+        <script>\
+            $('#harga_" + progressid + ", #qty_" + progressid + "').keyup(function(){\
+                var harga = $('#harga_" + progressid + "').val();\
+                var qty = $('#qty_" + progressid + "').val();\
+                var c = harga*qty;\
+                $('#total_" + progressid + "').val(c);\
+            });\
+            $('.remove-progress').click(function(){\
+                var id = $(this).attr('data-id');\
+                $('#accordion-' + id).remove();\
+            })\
+        </script>\
+    ")
+
+    $('#modal-add-progress-close-btn').click()
 })

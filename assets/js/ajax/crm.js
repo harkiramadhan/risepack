@@ -55,6 +55,16 @@ var KTDatatablesServerSide = function () {
                     }
                 },
                 {
+                    targets: 4,
+                    data: null,
+                    orderable: true,
+                    render: function (data, type, row, meta) {
+                        return `
+                            <a href="${baseUrl}customer/${row.customer_id}" class="text-dark text-hover-primary">${data}</a>
+                        `
+                    }
+                },
+                {
                     targets: 5,
                     orderable: false,
                     render: function (data, type, row, meta) {
@@ -415,6 +425,7 @@ $('#deal_status_id').change(function(){
         var month = date.getMonth() + 1
 
         $('#bulan').val(month)
+        $('#bulan').attr('disabled', false)
     }
 
     $.ajax({
