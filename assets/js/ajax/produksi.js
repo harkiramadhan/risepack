@@ -274,25 +274,25 @@ function showModalSpk(produksiid){
                                         <div class='col-lg-5'>\
                                             <div class='mb-10'>\
                                                 <label for='exampleFormControlInput1' class='required form-label'>Harga Satuan</label>\
-                                                <input type='number' name='harga[]' class='form-control form-control-solid' value='"+  progress[s].harga +"' placeholder='Masukkan Harga Satuan'/>\
+                                                <input type='number' name='harga[]' id='harga_" + progress[s].progress_id + "' class='form-control form-control-solid' value='"+  progress[s].harga +"' placeholder='Masukkan Harga Satuan'/>\
                                             </div>  \
                                         </div>\
                                         <div class='col-lg-2'>\
                                             <div class='mb-10'>\
                                                 <label for='exampleFormControlInput1' class='required form-label'>Qty</label>\
-                                                <input type='number' name='qty[]' class='form-control form-control-solid' value='"+  progress[s].qty +"' placeholder='Qty'/>\
+                                                <input type='number' name='qty[]' id='qty_" + progress[s].progress_id + "' class='form-control form-control-solid' value='"+  progress[s].qty +"' placeholder='Qty'/>\
                                             </div>  \
                                         </div>\
                                         <div class='col-lg-5'>\
                                             <div class='mb-10'>\
                                                 <label for='exampleFormControlInput1' class='required form-label'>Total Harga</label>\
-                                                <input type='number' name='total[]' class='form-control form-control-solid' value='"+  progress[s].total +"' placeholder='Total Harga'/>\
+                                                <input type='number' name='total[]' id='total_" + progress[s].progress_id + "' class='form-control form-control-solid' value='"+  progress[s].total +"' placeholder='Total Harga'/>\
                                             </div>  \
                                         </div>\
                                         <div class='col-lg-12'>\
                                             <div class='mb-5'>\
                                                 <label for='exampleFormControlInput1' class='required form-label'>Deskripsi</label>\
-                                                <textarea name='deskripsi[]' id='' cols='30' rows='5' class='form-control form-control-solid'>" + progress[s].deskripsi + "</textarea>\
+                                                <textarea name='deskripsi[]' cols='30' rows='5' class='form-control form-control-solid'>" + progress[s].deskripsi + "</textarea>\
                                             </div>\
                                         </div>\
                                         <div class='col-lg-12'>\
@@ -303,6 +303,12 @@ function showModalSpk(produksiid){
                             </div>\
                         </div>\
                         <script>\
+                            $('#harga_" + progress[s].progress_id + ", #qty_" + progress[s].progress_id + "').keyup(function(){\
+                                var harga = $('#harga_" + progress[s].progress_id + "').val();\
+                                var qty = $('#qty_" + progress[s].progress_id + "').val();\
+                                var c = harga*qty;\
+                                $('#total_" + progress[s].progress_id + "').val(c);\
+                            });\
                             $('.remove-progress').click(function(){\
                                 var id = $(this).attr('data-id');\
                                 $('#accordion-' + id).remove();\

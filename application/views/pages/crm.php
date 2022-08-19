@@ -2897,7 +2897,7 @@
 </div>
 
 <div class="modal fade" tabindex="-1" id="modal-import-customer">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Import Konsumen Baru</h5>
@@ -2908,19 +2908,20 @@
                 <!--end::Close-->
             </div>
 
+            <form action="<?= site_url('customer/import') ?>" method="POST" enctype="multipart/form-data">
             <div class="modal-body mt-n5">
-                <form action="" id="#">
-                    <div class="mb-3">
-                        <label for="nama" class="required form-label">Pilih File</label>
-                        <input type="file" id="file" name="file" class="form-control form-control-solid" placeholder="Nama Konsumen"/>
-                    </div>
-                </form>
+                <a href="<?= site_url('customer/downloadFormat') ?>" class="btn btn-sm my-primary w-100 mb-5 text-white" download><i class="fas fa-download me-3 text-white"></i> Format Import Konsumen</a>
+                <div class="mb-3">
+                    <label for="nama" class="required form-label">Pilih File</label>
+                    <input type="file" id="file" name="fileImport" class="form-control form-control-solid" placeholder="Nama Konsumen"/>
+                </div>
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="submit-form-import-customer" class="btn btn-primary my-primary">Save changes</button>
+                <button type="submit" id="submit-form-import-customer" class="btn btn-primary my-primary">Save changes</button>
             </div>
+            </form>
         </div>
     </div>
 </div>

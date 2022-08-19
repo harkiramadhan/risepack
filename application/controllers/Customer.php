@@ -2,6 +2,13 @@
 use Ozdemir\Datatables\Datatables;
 use Ozdemir\Datatables\DB\CodeigniterAdapter;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Csv;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Writer\IWriter;
+
 class Customer extends CI_Controller{
     function __construct(){
         parent::__construct();
@@ -263,5 +270,119 @@ class Customer extends CI_Controller{
             $order = sprintf("%03d", 1);
         }
         echo $order;
+    }
+
+
+    /* Phpspreadsheet */
+    function downloadFormat(){
+        $tipeInstansi = $this->db->get('tipe_instansi');
+
+        $spreadsheet = new Spreadsheet();  
+        $Excel_writer = new Xlsx($spreadsheet);
+
+        $spreadsheet->setActiveSheetIndex(0);
+        $sheet = $spreadsheet->getActiveSheet();
+        $styleBold = [
+            'font' => [
+                'bold' => true,
+            ],
+        ];
+
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setWidth(30);
+        $sheet->getColumnDimension('C')->setWidth(40);
+        $sheet->getColumnDimension('D')->setAutoSize(true);
+        $sheet->getColumnDimension('E')->setAutoSize(true);
+        $sheet->getColumnDimension('F')->setAutoSize(true);
+        $sheet->getColumnDimension('G')->setAutoSize(true);
+        $sheet->getColumnDimension('H')->setAutoSize(true);
+        $sheet->getColumnDimension('I')->setAutoSize(true);
+        $sheet->getStyle('A:I')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('A:I')->getAlignment()->setVertical('center');
+        $sheet->getStyle('B1:I1')->applyFromArray($styleBold);
+
+        $sheetStyle = $spreadsheet->getActiveSheet();
+
+        $sheetStyle->setCellValue('B1','Nama');
+        $sheetStyle->setCellValue('C1','No Hp');
+        $sheetStyle->setCellValue('D1','Tipe Instansi');
+        $sheetStyle->setCellValue('E1','Nama Instansi');
+        $sheetStyle->setCellValue('G1','Kode Tipe Instansi Tersedia');
+
+        $excel_row = 2;
+        foreach($tipeInstansi->result() as $row){
+            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(7, $excel_row, $row->instansi);
+            $sheet->getStyle('G' . $excel_row)->applyFromArray($styleBold);
+            $sheet->getStyle('G' . $excel_row)->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('fffe00');
+            $excel_row++;
+        }
+
+        header('Content-Type: application/vnd.ms-excel');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Content-Disposition: attachment;filename=Format Import Konsumen.Xlsx'); 
+        header('Cache-Control: max-age=0');
+        ob_end_clean();
+        $Excel_writer->save('php://output');
+        exit;
+
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+
+    function import(){
+        $tipeInstansi = $this->db->get('tipe_instansi');
+        $config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'xlsx';
+        $config['encrypt_name'] = TRUE;
+
+        $this->load->library('upload', $config);
+        $this->upload->do_upload('fileImport');
+
+        $upload_data = $this->upload->data();
+        $fileImport = $upload_data['file_name'];
+        if(!$this->upload->do_upload('fileImport')){
+            $this->session->set_flashdata('error', "File Belum Di Pilih");
+            redirect($_SERVER['HTTP_REFERER']);
+        }else{
+            $newFileNames = explode('.',$fileImport);
+            $fileType = ucfirst($newFileNames[1]);
+            $path = './uploads/';
+            $inputFileType = $fileType;
+            $inputFileName = $path.$fileImport;
+            $reader = IOFactory::createReader($inputFileType);
+            $reader->setReadDataOnly(true);
+            $spreadsheet = $reader->load($inputFileName);
+            $sheetData = $spreadsheet->getActiveSheet()->toArray(null,true,true,true);
+            $import = [];
+
+            for($row = 2; $row <= count($sheetData); $row++){
+                $instansi = $this->db->get_where('tipe_instansi', ['instansi' => $sheetData[$row]['D']]);
+                $instansi_id = ($instansi->num_rows() > 0) ? $instansi->row()->id : NULL;
+
+                $data = [
+                    'nama' => $sheetData[$row]['B'],
+                    'nohp' => $sheetData[$row]['C'],
+                    'instansi_id' => $instansi_id,                    
+                    'instansi' => $sheetData[$row]['E']
+                ]; 
+                $this->db->insert('customer', $data);
+                if($this->db->affected_rows() > 0){
+                    $import[] = $data;
+                }
+            }
+
+            if($spreadsheet == FALSE){
+                $this->session->set_flashdata('error', "File Tidak Support !");
+                redirect($_SERVER['HTTP_REFERER']);
+            }
+
+            if($import == NULL){
+                $this->session->set_flashdata('error', "File Kosong !");
+                redirect($_SERVER['HTTP_REFERER']);
+            }
+
+            $this->session->set_flashdata('success', "Data Berhasil Di Import");
+            redirect($_SERVER['HTTP_REFERER']);
+        }
     }
 }
