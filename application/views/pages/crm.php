@@ -20,12 +20,12 @@
             <!--end::Nav item-->
             <!--begin::Nav item-->
             <li class="nav-item">
-                <a class="nav-link text-white py-5 me-6" href="../../demo9/dist/apps/projects/budget.html">Kendala Produksi</a>
+                <a class="nav-link text-white py-5 me-6" data-bs-toggle="tab" href="#tab_kendala">Kendala Produksi</a>
             </li>
             <!--end::Nav item-->
             <!--begin::Nav item-->
             <li class="nav-item">
-                <a class="nav-link text-white py-5 me-6" href="../../demo9/dist/apps/projects/users.html">ACC FAW</a>
+                <a class="nav-link text-white py-5 me-6" data-bs-toggle="tab" href="#tab_faw">ACC FAW</a>
             </li>
             <!--end::Nav item-->
         </ul>
@@ -33,6 +33,8 @@
 
         <!-- begin::tab content -->
         <div class="tab-content" id="myTabContent">
+
+            <!-- Tab Konsumen -->
             <div class="tab-pane fade show active" id="tab_konsumen" role="tabpanel">
                 <!-- end::Row -->
                 <div class="card card-flush mt-10">
@@ -106,6 +108,7 @@
                 </div>
             </div>
             
+            <!-- Tab Order -->
             <div class="tab-pane fade" id="tab_crm" role="tabpanel">
                 <!--begin::Row-->
                 <div class="row g-6 g-xl-9 mt-2">
@@ -326,6 +329,7 @@
                 </div>
             </div>
 
+            <!-- Tab Harga -->
             <div class="tab-pane fade" id="tab_harga" role="tabpanel">
                 <!--begin::Row-->
                 <div class="row g-6 g-xl-9 mt-2">
@@ -2603,8 +2607,54 @@
                 <!--end::Row-->
             </div>
 
-            <div class="tab-pane fade" id="kt_tab_pane_9" role="tabpanel">
+            <!-- Tab Kendala -->
+            <div class="tab-pane fade" id="tab_kendala" role="tabpanel">
                 ...
+            </div>
+
+            <!-- Tab FAW -->
+            <div class="tab-pane fade" id="tab_faw" role="tabpanel">
+                <!-- end::Row -->
+                <div class="card card-flush mt-10">
+                    <!--begin::Card body-->
+                    <div class="card-body pt-0">
+                        <!--begin::CRUD-->
+                        <div class="py-5">
+                            <!--begin::Wrapper-->
+                            <div class="d-flex flex-stack flex-wrap mb-5">
+                                <!--begin::Search-->
+                                <div class="d-flex align-items-center position-relative my-1 mb-2 mb-md-0">
+                                    <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                                    <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
+                                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                    <input type="text" data-kt-docs-table-filter="search-faw" class="form-control form-control-solid w-450px ps-15" placeholder="Search ..." />
+                                </div>
+                                <!--end::Search-->
+                            </div>
+                            <!--end::Wrapper-->
+                            <!--begin::Datatable-->
+                            <table id="kt_datatable_faw" class="table align-middle table-row-dashed fs-6 gy-5">
+                                <thead>
+                                    <tr class="text-start text-gray-800 fw-bolder fs-7 text-uppercase gs-0">
+                                        <th>Kode Order</th>
+                                        <th>Nama Konsumen</th>
+                                        <th>Grading Konsumen</th>
+                                        <th class="text-end min-w-100px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-600 fw-bold"></tbody>
+                            </table>
+                            <!--end::Datatable-->
+                        </div>
+                        <!--end::CRUD-->
+                    </div>
+                    <!--end::Card body-->
+                </div>
             </div>
         </div>
         <!-- end::tab content -->

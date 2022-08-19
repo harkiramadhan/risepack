@@ -2,7 +2,7 @@
 use Ozdemir\Datatables\Datatables;
 use Ozdemir\Datatables\DB\CodeigniterAdapter;
 
-class CRM extends CI_Controller{
+class Crm extends CI_Controller{
     function __construct(){
         parent::__construct();
 
