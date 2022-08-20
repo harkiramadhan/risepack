@@ -310,7 +310,7 @@
                     <input type="hidden" class="produksiid" name="produksiid" value="">
                     <div class="mb-3">
                         <label for="deadline" class="required form-label">Deadline</label>
-                        <input type="date" id="deadline_spk" name="deadline" class="form-control form-control-solid" placeholder="Deadline"/>
+                        <input type="text" id="deadline_spk" name="deadline" class="form-control form-control-solid" placeholder="Deadline" disabled/>
                     </div>
                     <label class="mt-3 mb-3" for="">Progress Produksi</label>
                     <!--begin::Accordion-->
