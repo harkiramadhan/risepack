@@ -23,7 +23,8 @@ class Crm extends CI_Controller{
             'produk_kategori' => $this->db->get('produk_kategori'),
             'ajax' => [
                 'crm',
-                'customer'
+                'customer',
+                'crm-faw'
             ]
         ];
         $this->load->view('template', $datas);

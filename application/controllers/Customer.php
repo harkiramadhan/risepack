@@ -318,6 +318,7 @@ class Customer extends CI_Controller{
             $excel_row++;
         }
 
+        ob_get_clean();
         header('Content-Type: application/vnd.ms-excel');
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
         header('Content-Disposition: attachment;filename=Format Import Konsumen.Xlsx'); 
